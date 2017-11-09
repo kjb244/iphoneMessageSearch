@@ -1,0 +1,58 @@
+<section ng-app="myApp" ng-controller="myCtrl">
+	{{#with content}}
+		<div class="row main">
+			<div class="small-12 medium-6 large-4 medium-centered large-centered columns">
+				{{#each this.inputs}}
+					<input type="{{this.type}}" id="{{this.id}}" name="{{this.name}}" ng-model="inputParm['{{this.name}}']" placeholder="{{this.placeholder}}"/>
+				{{/each}}
+				{{#with this.button}}
+					<a href="#" id="{{this.id}}" class="button" ng-init="load=false"  ng-click="btnClicked(); load=true">
+						<div class="loader">
+				            <div>Submit</div>
+		            		<div class="loading" ng-show="load"></div>
+	          			</div>
+	      			</a>
+				{{/with}}
+			</div>
+		</div>
+	{{/with}}
+
+
+	<div class="results" >
+    <div class="row collapse">
+      <div class="columns small-12 medium-4">
+        <input type="text" placeholder="search" id="search" ng-model="search"/>
+        <div class="paging-container">
+          <ul class="pagination">
+            <li ng-repeat="rec in pagingArr" ng-class="{ 'current': rec == pagingNum}">
+              <a href="javascript:void(0)" ng-click="pagingClick(rec)">\{{rec}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+		<table class="row hover unstriped">
+			<thead>
+				<tr>
+					<th>Text</th>
+					<th>Sent/Received</th>
+					<th>Number</th>
+					<th>Date</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="rec in resArr | filter:search">
+					<td ng-bind-html="rec.text">\{{rec.text}}</td>
+					<td>\{{rec.sent_received}}</td>
+					<td>\{{rec.number}}</td>
+					<td>\{{rec.date*1000 | date:'MM/dd/yyyy HH:mm:ss'}}</td>
+				</tr>
+
+			</tbody>
+
+		</table>
+
+
+
+	</div>
+</section>
